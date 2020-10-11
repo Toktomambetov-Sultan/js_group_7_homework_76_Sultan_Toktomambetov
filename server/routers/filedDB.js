@@ -1,21 +1,19 @@
-const { nanoid } = require("nanoid");
-
 const fs = require("fs").promises;
-const fileName = "./DB.json";
+const fileName = __dirname + "/DB.json";
 const readFile = async () => {
-  return (await fs.readFile(fileName)).toJSON();
+  return JSON.parse(await fs.readFile(fileName));
 };
 const writeFile = async (content) => {
-    await fs.writeFile(fileName, content); 
+  await fs.writeFile(fileName, content);
 };
 
 module.exports = {
-  async write(message) {
-      const obj=await readFile();
-      obj.push({...message, id: nanoid()}); 
-      await writeFile(obj);
+  async add(message) {
+    const obj = await readFile();
+    obj.push({ ...message });
+    await writeFile(obj);
   },
   async get() {
-      return await readFile();
+    return await readFile();
   },
 };
