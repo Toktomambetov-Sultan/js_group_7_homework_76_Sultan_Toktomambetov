@@ -10,13 +10,13 @@ const errorHadler = (message) => {
     return typeof property === "string" && property !== "";
   };
   properties.forEach((elem) => {
-    if (propertyHandler(message[elem])) wrongProperties.push(elem);
+    if (!propertyHandler(message[elem])) wrongProperties.push(elem);
   });
   return wrongProperties;
 };
 
 router.get("/", async (req, res) => {
-  const sliceNumber = 5;
+  const sliceNumber = 30;
   const messages = await filedDB.get();
   const datetime = req.query.datetime;
   let answer;
@@ -35,16 +35,16 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const message = req.body;
-  const errorProps = errorHadler(req.body.message);
+  const errorProps = errorHadler(req.body);
   if (errorProps.length === 0) {
+    const message = { message: req.body.message, author: req.body.author };
     const datetime = new Date().toISOString();
     filedDB.add({ ...message, datetime, id: nanoid() });
     res.send({ message: "Message recorded.", datetime });
   } else {
     res.status(400).send({
       errorProps: errorProps,
-      message: errorProps.join(" and ") + "prop(s) is(are) uncorrect.",
+      message: errorProps.join(" and ") + " prop(s) is(are) uncorrect.",
     });
   }
 });
