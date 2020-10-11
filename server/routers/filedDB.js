@@ -4,7 +4,7 @@ const readFile = async () => {
   return JSON.parse(await fs.readFile(fileName));
 };
 const writeFile = async (content) => {
-  await fs.writeFile(fileName, content);
+  await fs.writeFile(fileName, JSON.stringify(content));
 };
 
 module.exports = {

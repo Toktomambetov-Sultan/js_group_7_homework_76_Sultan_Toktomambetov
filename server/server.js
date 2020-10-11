@@ -1,5 +1,4 @@
 const express = require("express");
-const nanoid = require("nanoid");
 const cors = require("cors");
 const app = express();
 const messageRouter = require("./routers/messagesRouter");

@@ -16,18 +16,33 @@ const errorHadler = (message) => {
 };
 
 router.get("/", async (req, res) => {
-  res.send(await filedDB.get());
+  const sliceNumber = 5;
+  const messages = await filedDB.get();
+  const datetime = req.query.datetime;
+  let answer;
+  let status = 200;
+  if (datetime) {
+    if (isNaN(new Date(datetime))) {
+      answer = { message: "Datetime query is not correct" };
+      status = 400;
+    } else {
+      answer = messages.filter((item) => new Date(item.datetime) > new Date(datetime)).slice(-sliceNumber);
+    }
+  } else {
+    answer = messages.slice(-sliceNumber);
+  }
+  res.status(status).send(answer);
 });
 
 router.post("/", async (req, res) => {
-  const message = req.body.message;
+  const message = req.body;
   const errorProps = errorHadler(req.body.message);
   if (errorProps.length === 0) {
     const datetime = new Date().toISOString();
     filedDB.add({ ...message, datetime, id: nanoid() });
     res.send({ message: "Message recorded.", datetime });
   } else {
-    res.send({
+    res.status(400).send({
       errorProps: errorProps,
       message: errorProps.join(" and ") + "prop(s) is(are) uncorrect.",
     });
