@@ -10,7 +10,7 @@ const fetchSuccess = () => {
 };
 
 const fetchError = (error) => {
-  return { type: FETCH_ERROR, error };
+  return { type: FETCH_ERROR, data: { ...error } };
 };
 
 const getMessagesAction = (messages) => {
@@ -21,11 +21,11 @@ export const changeCurrentMessage = (prop, value) => {
   return { type: CHANGE_CURRENT_MESSAGE, prop, value };
 };
 
-export const getMessages = () => {
+export const getMessages = (datetime) => {
   return async (dispatch) => {
     dispatch(fetchRequest());
     try {
-      const response = await axiosOrder.get("/messages");
+      const response = await axiosOrder.get("/messages?datetime=" + (datetime ? datetime : ""));
       dispatch(getMessagesAction(response.data.reverse()));
       dispatch(fetchSuccess);
     } catch (error) {
@@ -40,8 +40,7 @@ export const addMessage = (message) => {
       await axiosOrder.post("/messages", message);
       dispatch(fetchSuccess);
     } catch (error) {
-      console.log(error.response.data);
-      dispatch(fetchError(error));
+      dispatch(fetchError(error.response.data));
     }
   };
 };

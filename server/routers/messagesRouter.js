@@ -26,11 +26,16 @@ router.get("/", async (req, res) => {
       answer = { message: "Datetime query is not correct" };
       status = 400;
     } else {
-      answer = messages.filter((item) => new Date(item.datetime) > new Date(datetime)).slice(-sliceNumber);
+      answer = messages
+        .filter((item) => {
+          return new Date(item.datetime) > new Date(datetime);
+        })
+        .slice(-sliceNumber);
     }
   } else {
     answer = messages.slice(-sliceNumber);
   }
+  console.log( "\n",new Date(datetime).toString(), "\n", new Date(messages[messages.length - 1].datetime).toString());
   res.status(status).send(answer);
 });
 
@@ -43,6 +48,7 @@ router.post("/", async (req, res) => {
     res.send({ message: "Message recorded.", datetime });
   } else {
     res.status(400).send({
+      type: "props error",
       errorProps: errorProps,
       message: errorProps.join(" and ") + " prop(s) is(are) uncorrect.",
     });
