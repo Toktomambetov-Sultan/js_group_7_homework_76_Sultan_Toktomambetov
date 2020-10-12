@@ -7,27 +7,32 @@
 	font-family: "Roboto", sans-serif;
 	font-weight: 400;
 }
+
 .Form__label {
 	display: block;
 	padding: 10px;
 }
+
 .Form-group__name {
 	display: block;
 	margin-bottom: 10px;
 	font-size: 26px;
 	text-align: start;
 }
+
 .Form__input {
 	width: 100%;
 	font-size: 20px;
 	padding: 5px;
 }
+
 .Form__textarea {
 	width: 100%;
 	resize: none;
 	height: 100px;
 	padding: 5px;
 }
+
 .Form__submit-btn {
 	background-color: rgb(82, 82, 82);
 	color: #fff;
@@ -37,12 +42,15 @@
 	font-size: 20px;
 	outline: none;
 }
+
 .Form__submit-btn:hover {
 	border: 1px solid #000;
 	color: #000;
 }
+
 .Form__submit-btn:active {
 	color: rgb(82, 82, 82);
 	background-color: #fff;
 	border: 1px solid rgb(82, 82, 82);
 }
+

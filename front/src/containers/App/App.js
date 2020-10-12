@@ -4,7 +4,7 @@ import Form from "../../components/Form/Form";
 import MessageItem from "../../components/MessageItem/MessageItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { addMessage, changeCurrentMessage, getMessages } from "../../store/actions";
+import { addMessage, changeCurrentMessage, clearErrors, getMessages } from "../../store/actions";
 import { useRef } from "react";
 
 function App() {
@@ -13,9 +13,11 @@ function App() {
   const addMessageHandler = (message) => dispatch(addMessage(message));
 
   const changeCurrentMessageHandler = (prop, message) => dispatch(changeCurrentMessage(prop, message));
+  const clearErrorsHandler = () => dispatch(clearErrors());
 
   const onSubmit = (event) => {
     event.preventDefault();
+    clearErrorsHandler();
     addMessageHandler(state.currentMessage);
   };
 

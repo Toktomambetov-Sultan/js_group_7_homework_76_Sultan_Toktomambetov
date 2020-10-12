@@ -1,5 +1,12 @@
 import axiosOrder from "../axiosOrder";
-import { CHANGE_CURRENT_MESSAGE, FETCH_ERROR, FETCH_REQUEST, FETCH_SUCCESS, GET_MESSAGES } from "./actionsTypes";
+import {
+  CHANGE_CURRENT_MESSAGE,
+  CLEAR_ERROR,
+  FETCH_ERROR,
+  FETCH_REQUEST,
+  FETCH_SUCCESS,
+  GET_MESSAGES,
+} from "./actionsTypes";
 
 const fetchRequest = () => {
   return { type: FETCH_REQUEST };
@@ -15,6 +22,12 @@ const fetchError = (error) => {
 
 const getMessagesAction = (messages) => {
   return { type: GET_MESSAGES, messages };
+};
+
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERROR,
+  };
 };
 
 export const changeCurrentMessage = (prop, value) => {

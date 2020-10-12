@@ -1,4 +1,4 @@
-import { CHANGE_CURRENT_MESSAGE, FETCH_ERROR, FETCH_REQUEST, FETCH_SUCCESS, GET_MESSAGES } from "./actionsTypes";
+import { CHANGE_CURRENT_MESSAGE, CLEAR_ERROR, FETCH_ERROR, FETCH_REQUEST, FETCH_SUCCESS, GET_MESSAGES } from "./actionsTypes";
 
 const initialState = {
   messages: [],
@@ -23,6 +23,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, messages: [...action.messages, ...state.messages] };
     case CHANGE_CURRENT_MESSAGE:
       return { ...state, currentMessage: { ...state.currentMessage, [action.prop]: action.value } };
+    case CLEAR_ERROR: 
+     return {...state, error: {type: null, data: null}}
     default:
       return { ...state };
   }
